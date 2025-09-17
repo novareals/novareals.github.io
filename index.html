@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tidal X - Professional JavaScript Code Executor</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0a0a0f 100%);
+            color: #e8e8f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a3e;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #40e0ff;
+        }
+
+        .wave-emoji {
+            font-size: 32px;
+            animation: wave 2s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #a0a0b0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #40e0ff;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(64, 224, 255, 0.1) 0%, transparent 70%);
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #40e0ff 0%, #60f0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #a0a0b0;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .discord-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(88, 101, 242, 0.3);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(88, 101, 242, 0.4);
+            background: linear-gradient(135deg, #6b73ff 0%, #5865f2 100%);
+        }
+
+        .discord-logo {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: rgba(26, 26, 46, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #e8e8f0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(64, 224, 255, 0.05) 0%, rgba(10, 10, 15, 0.8) 100%);
+            border: 1px solid #2a2a3e;
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(64, 224, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #40e0ff 0%, #0ea5e9 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: #0a0a0f;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #40e0ff;
+        }
+
+        .feature-description {
+            color: #a0a0b0;
+            line-height: 1.6;
+        }
+
+        /* Documentation Section */
+        .documentation {
+            padding: 80px 0;
+        }
+
+        .doc-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .doc-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #a0a0b0;
+        }
+
+        .doc-steps {
+            background: linear-gradient(135deg, rgba(64, 224, 255, 0.05) 0%, rgba(10, 10, 15, 0.8) 100%);
+            border: 1px solid #2a2a3e;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #2a2a3e;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #40e0ff 0%, #0ea5e9 100%);
+            color: #0a0a0f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: #40e0ff;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .step-content p {
+            color: #a0a0b0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            border: 1px solid #2a2a3e;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: #40e0ff;
+            overflow-x: auto;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background: rgba(26, 26, 46, 0.3);
+        }
+
+        .faq-item {
+            background: linear-gradient(135deg, rgba(64, 224, 255, 0.05) 0%, rgba(10, 10, 15, 0.8) 100%);
+            border: 1px solid #2a2a3e;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: rgba(64, 224, 255, 0.3);
+        }
+
+        .faq-question {
+            padding: 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #e8e8f0;
+            font-size: 1.1rem;
+        }
+
+        .faq-question:hover {
+            color: #40e0ff;
+        }
+
+        .faq-toggle {
+            transition: transform 0.3s ease;
+            color: #40e0ff;
+        }
+
+        .faq-toggle.active {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 0 25px 25px;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            color: #a0a0b0;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            border-top: 1px solid #2a2a3e;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.8);
+        }
+
+        .footer-content {
+            color: #6b7280;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .doc-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <span class="wave-emoji">🌊</span>
+                    <span>Tidal X</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#docs">Documentation</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#discord">Discord</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Seamless JavaScript Execution</h1>
+                <p class="subtitle">Professional Chrome JavaScript IDE with advanced code execution, project management, and developer tools</p>
+                <a href="https://discord.gg/x9cBrcYSeh" class="discord-btn" target="_blank" rel="noopener">
+                    <svg class="discord-logo" viewBox="0 0 24 24">
+                        <path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 0 0-.079.036c-.21.369-.444.85-.608 1.23a18.565 18.565 0 0 0-5.487 0 12.099 12.099 0 0 0-.617-1.23A.077.077 0 0 0 8.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 0 0-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 0 0 .031.055 20.03 20.03 0 0 0 5.993 2.98.078.078 0 0 0 .084-.026 13.83 13.83 0 0 0 1.226-1.963.074.074 0 0 0-.041-.104 13.201 13.201 0 0 1-1.872-.878.075.075 0 0 1-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 0 1 .078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 0 1 .079.009c.12.098.245.195.372.288a.075.075 0 0 1-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 0 0-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 0 0 .084.028 19.963 19.963 0 0 0 6.002-2.981.076.076 0 0 0 .032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 0 0-.031-.028zM8.02 15.278c-1.182 0-2.157-1.069-2.157-2.38 0-1.312.956-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.956 2.38-2.157 2.38zm7.975 0c-1.183 0-2.157-1.069-2.157-2.38 0-1.312.955-2.38 2.157-2.38 1.21 0 2.176 1.077 2.157 2.38 0 1.312-.946 2.38-2.157 2.38z"/>
+                    </svg>
+                    Join Our Discord
+                </a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title">Powerful Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0L19.2 12l-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Advanced Code Editor</h3>
+                        <p class="feature-description">Full-featured IDE with syntax highlighting, tab management, and auto-indentation for seamless JavaScript development.</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 2v12l10-6L3 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Instant Execution</h3>
+                        <p class="feature-description">Execute JavaScript code instantly with real-time output, error handling, and performance metrics.</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2H4a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2zM9 12H7V8h2v4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Project Management</h3>
+                        <p class="feature-description">Save, load, and organize your JavaScript projects with full project structure preservation.</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Security Features</h3>
+                        <p class="feature-description">Built-in security warnings for potentially dangerous code execution with user confirmation dialogs.</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Multi-Tab Interface</h3>
+                        <p class="feature-description">Work on multiple scripts simultaneously with a modern tabbed interface and easy tab management.</p>
+                    </div>
+                   
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Professional UI</h3>
+                        <p class="feature-description">Beautiful, responsive interface with modern design, smooth animations, and intuitive user experience.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="docs" class="documentation">
+            <div class="container">
+                <h2 class="section-title">Getting Started</h2>
+                <div class="doc-content">
+                    <div>
+                        <p class="doc-text">
+                            Tidal X is a professional JavaScript code executor that runs directly in Chrome's console environment. It provides a full IDE experience with advanced features for JavaScript development and testing.
+                        </p>
+                        <p class="doc-text">
+                            Unlike the basic browser console, Tidal X offers project management, multi-tab editing, code saving/loading, and enhanced security features. Perfect for developers who need more than basic console functionality.
+                        </p>
+                    </div>
+                   
+                    <div class="doc-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Get Access Key</h4>
+                                <p>Join our Discord server to receive your access key for Tidal X</p>
+                            </div>
+                        </div>
+                       
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Open Chrome DevTools</h4>
+                                <p>Press F12 or Ctrl+Shift+I to open Developer Tools and navigate to Console</p>
+                            </div>
+                        </div>
+                       
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Paste & Execute</h4>
+                                <p>Copy the Tidal X script from Discord and paste it into the console</p>
+                            </div>
+                        </div>
+                       
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Enter Access Key</h4>
+                                <p>When prompted, enter your access key to unlock the full IDE experience</p>
+                            </div>
+                        </div>
+                       
+                        <div class="step">
+                            <div class="step-number">5</div>
+                            <div class="step-content">
+                                <h4>Start Coding</h4>
+                                <p>Create new tabs, write JavaScript code, and execute with instant feedback</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What is Tidal X and how does it work?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tidal X is a professional JavaScript code executor that runs in your Chrome browser console. It provides a full IDE experience with features like multi-tab editing, project management, code execution, and advanced security features. Simply paste the script in your console and start coding!</p>
+                    </div>
+                </div>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I get access to Tidal X?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Join our Discord server where you'll receive the complete script and access key. Our community provides support, updates, and shares coding tips.</p>
+                    </div>
+                </div>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is Tidal X safe to use?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! Tidal X includes built-in security features that warn you about potentially dangerous code execution. It runs in your browser's sandboxed environment and includes authentication to ensure secure access.</p>
+                    </div>
+                </div>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I save my projects?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! Tidal X includes full project management with save/load functionality. Export your projects as JSON files and import them later to continue your work.</p>
+                    </div>
+                </div>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What makes it different from the browser console?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Unlike the basic browser console, Tidal X offers a complete IDE experience with syntax highlighting, multi-tab editing, project organization, advanced execution features, and a professional user interface designed for serious JavaScript development.</p>
+                    </div>
+                </div>
+               
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Does it work on all websites?</span>
+                        <span class="faq-toggle">▼</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Tidal X runs in your browser console and will work on any website where you can access developer tools. However, some sites with strict security policies may limit certain JavaScript functionalities.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Tidal X. Professional JavaScript Code Executor for Chrome.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+           
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                toggle.classList.remove('active');
+            } else {
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-answer').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelectorAll('.faq-toggle').forEach(item => {
+                    item.classList.remove('active');
+                });
+               
+                // Open clicked item
+                answer.classList.add('active');
+                toggle.classList.add('active');
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
